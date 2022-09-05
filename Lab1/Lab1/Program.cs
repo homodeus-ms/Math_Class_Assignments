@@ -1,10 +1,12 @@
-﻿namespace Lab1
+﻿using System;
+
+namespace Lab1
 {
-    public static class Lab1
+    class Program
     {
-        public static int Add(int a, int b)
+        static void Main(string[] args)
         {
-            return a + b;
+            Console.WriteLine("Hello World!");
         }
     }
 }

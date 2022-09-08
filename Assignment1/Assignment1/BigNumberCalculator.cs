@@ -5,55 +5,56 @@ namespace Assignment1
 {
     public class BigNumberCalculator
     {
-        private int BitCount;
-        private EMode Mode;
-        private static StringBuilder builder;
+        private readonly int mBitCount;
+        private readonly EMode mMode;
+        private static StringBuilder mbuilder;
+        private const int First_BIT_INDEX = 2;
 
         public BigNumberCalculator(int bitCount, EMode mode)
         {
-            BitCount = bitCount;
-            Mode = mode;
+            mBitCount = bitCount;
+            mMode = mode;
         }
 
         public static string GetOnesComplementOrNull(string num)
         {
-            if (!IsValidFormat(num))
+            if (!isValidFormat(num))
             {
                 return null;
             }
 
-            if (num[1] != 'b')
+            if (num.Length == 1 || num[1] != 'b')
             {
                 return null;
             }
 
-            builder = new StringBuilder();
+            mbuilder = new StringBuilder();
 
-            builder.Append("0b");
+            mbuilder.Append("0b");
 
-            for (int i = 2; i < num.Length; i++)
+            for (int i = First_BIT_INDEX; i < num.Length; i++)
             {
-                builder.Append(num[i] == '0' ? '1' : '0');
+                mbuilder.Append(num[i] == '0' ? '1' : '0');
             }
 
-            string result = builder.ToString();
+            string result = mbuilder.ToString();
 
             return result;
         }
 
         public static string GetTwosComplementOrNull(string num)
         {
-            if (!IsValidFormat(num))
+            if (!isValidFormat(num))
             {
                 return null;
             }
 
-            if (num[1] != 'b')
+            if (num.Length == 1 || num[1] != 'b')
             {
                 return null;
             }
 
-            if (num.Substring(2).All(n => n == '0'))
+            if (num.Substring(First_BIT_INDEX).All(n => n == '0'))
             {
                 return num;
             }
@@ -84,7 +85,7 @@ namespace Assignment1
 
         public static string ToBinaryOrNull(string num)
         {
-            if (!IsValidFormat(num))
+            if (!isValidFormat(num))
             {
                 return null;
             }
@@ -100,18 +101,18 @@ namespace Assignment1
                 }
                 if (num[1] == 'x')
                 {
-                    return HexStrToBin(num);
+                    return makeHexStrToBin(num);
                 }
             }
 
-            string result = DecStrToBin(num);
+            string result = makeDecStrToBin(num);
 
             return result;
         }
 
         public static string ToHexOrNull(string num)
         {
-            if (!IsValidFormat(num))
+            if (!isValidFormat(num))
             {
                 return null;
             }
@@ -130,20 +131,20 @@ namespace Assignment1
 
                 if (num[1] == 'b')
                 {
-                    return BinStrToHex(num);
+                    return makeBinStrToHex(num);
                 }
             }
 
-            num = DecStrToBin(num);
+            num = makeDecStrToBin(num);
 
-            string result = BinStrToHex(num);
+            string result = makeBinStrToHex(num);
 
             return result;
         }
 
         public static string ToDecimalOrNull(string num)
         {
-            if (!IsValidFormat(num))
+            if (!isValidFormat(num))
             {
                 return null;
             }
@@ -159,12 +160,12 @@ namespace Assignment1
             }
             if (num[1] == 'b')
             {
-                return BinStrToDecimal(num);
+                return makeBinStrToDec(num);
             }
             
-            string result = HexStrToBin(num);
+            string result = makeHexStrToBin(num);
 
-            return BinStrToDecimal(result);
+            return makeBinStrToDec(result);
         }
 
 
@@ -172,7 +173,7 @@ namespace Assignment1
         {
             bOverflow = false;
 
-            if (!IsValidFormat(num1) || !IsValidFormat(num2))
+            if (!isValidFormat(num1) || !isValidFormat(num2))
             {
                 return null;
             }
@@ -180,16 +181,16 @@ namespace Assignment1
             bool bIsSameSignNumbers = false;
             char originSignBit = (char)0;
 
-            num1 = ToBinaryOrNull(num1).Substring(2);
-            num2 = ToBinaryOrNull(num2).Substring(2);
+            num1 = ToBinaryOrNull(num1).Substring(First_BIT_INDEX);
+            num2 = ToBinaryOrNull(num2).Substring(First_BIT_INDEX);
 
-            if (num1.Length > BitCount || num2.Length > BitCount)
+            if (num1.Length > mBitCount || num2.Length > mBitCount)
             {
                 return null;
             }
 
-            num1 = num1.PadLeft(BitCount, num1[0] == '0' ? '0' : '1');
-            num2 = num2.PadLeft(BitCount, num2[0] == '0' ? '0' : '1');
+            num1 = num1.PadLeft(mBitCount, num1[0] == '0' ? '0' : '1');
+            num2 = num2.PadLeft(mBitCount, num2[0] == '0' ? '0' : '1');
 
             if (num1[0] == num2[0])
             {
@@ -197,9 +198,9 @@ namespace Assignment1
                 originSignBit = num1[0];
             }
 
-            string sum = BinaryStringAdder(num1, num2);
+            string sum = addTwoBinaryStrings(num1, num2);
 
-            sum = sum.Substring(sum.Length - BitCount);
+            sum = sum.Substring(sum.Length - mBitCount);
 
             if (bIsSameSignNumbers && originSignBit != sum[0])
             {
@@ -208,7 +209,7 @@ namespace Assignment1
 
             string result = "0b" + sum;
 
-            if (Mode == EMode.Decimal)
+            if (mMode == EMode.Decimal)
             {
                 return ToDecimalOrNull(result);
             }
@@ -220,7 +221,7 @@ namespace Assignment1
         {
             bOverflow = false;
             
-            if (!IsValidFormat(num1) || !IsValidFormat(num2))
+            if (!isValidFormat(num1) || !isValidFormat(num2))
             {
                 return null;
             }
@@ -239,7 +240,7 @@ namespace Assignment1
             return result;
         }
         
-        private static bool IsValidFormat(string num)
+        private static bool isValidFormat(string num)
         {
             if (string.IsNullOrWhiteSpace(num))
             {
@@ -260,7 +261,7 @@ namespace Assignment1
                         return false;
                     }
 
-                    if (num.Substring(2).All(n => !(n == '0' || n == '1')))
+                    if (num.Substring(First_BIT_INDEX).All(n => !(n == '0' || n == '1')))
                     {
                         return false;
                     }
@@ -275,7 +276,7 @@ namespace Assignment1
                         return false;
                     }
 
-                    for (int i = 2; i < num.Length; i++)
+                    for (int i = First_BIT_INDEX; i < num.Length; i++)
                     {
                         if (num[i] < 48 || num[i] > 57 && num[i] < 65 || num[i] > 70)
                         {
@@ -293,7 +294,7 @@ namespace Assignment1
             {
                 if (num.Length == 1)
                 {
-                    return num[0] != '-' ? true : false;
+                    return num[0] != '-';
                 }
 
                 if (num[0] == '-' && (num[1] <= 48 || num[1] > 57))
@@ -319,7 +320,7 @@ namespace Assignment1
 
             return false;
         }
-        private static string BinaryStringAdder(string numA, string numB)
+        private static string addTwoBinaryStrings(string numA, string numB)
         {
             if (numA.Length > numB.Length)
             {
@@ -376,18 +377,18 @@ namespace Assignment1
 
             return result;
         }
-        private static string BinaryStrMultipleAdder(string numA, int Count)
+        private static string addBinaryStrMultiple(string numA, int Count)
         {
             string result = numA;
 
             for (int i = 0; i < Count - 1; i++)
             {
-                result = BinaryStringAdder(numA, result);
+                result = addTwoBinaryStrings(numA, result);
             }
 
             return result;
         }
-        private static string IntToBinary(int a)
+        private static string getBinaryFromIntRecursive(int a)
         {
             if (a <= 1)
             {
@@ -395,9 +396,9 @@ namespace Assignment1
             }
             string rest = $"{a % 2}";
 
-            return IntToBinary(a / 2) + rest;
+            return getBinaryFromIntRecursive(a / 2) + rest;
         }
-        private static string DecStrToBin(string num)
+        private static string makeDecStrToBin(string num)
         {
             bool bIsMinus = false;
             
@@ -411,15 +412,15 @@ namespace Assignment1
 
             if (num.Length == 1)
             {
-                string oneBitString = IntToBinary(num[0] - 48);
+                string oneBitString = getBinaryFromIntRecursive(num[0] - 48);
 
-                if(bIsMinus)
+                if (bIsMinus)
                 {
                     result = GetTwosComplementOrNull("0b" + oneBitString);
 
-                    if (result[2] == '0')
+                    if (result[First_BIT_INDEX] == '0')
                     {
-                        result = result.Insert(2, "1");
+                        result = result.Insert(First_BIT_INDEX, "1");
 
                         return result;
                     }
@@ -436,14 +437,14 @@ namespace Assignment1
             for (int i = 0; i < num.Length; i++)
             {
                 numToIntArr[i] = num[i] - 48;
-                numToBinaryArr[i] = IntToBinary(numToIntArr[i]);
+                numToBinaryArr[i] = getBinaryFromIntRecursive(numToIntArr[i]);
             }
 
-            string sum = BinaryStrMultipleAdder(numToBinaryArr[0], 10);
+            string sum = addBinaryStrMultiple(numToBinaryArr[0], 10);
 
             for (int i = 1; i < numToBinaryArr.Length; i++)
             {
-                string temp = BinaryStringAdder(sum, numToBinaryArr[i]);
+                string temp = addTwoBinaryStrings(sum, numToBinaryArr[i]);
 
                 if (i == numToBinaryArr.Length - 1)
                 {
@@ -451,7 +452,7 @@ namespace Assignment1
                     break;
                 }
 
-                sum = BinaryStrMultipleAdder(temp, 10);
+                sum = addBinaryStrMultiple(temp, 10);
             }
 
             if (bIsMinus)
@@ -470,11 +471,11 @@ namespace Assignment1
 
             return "0b0" + sum;
         }
-        private static string HexStrToBin(string num)
+        private static string makeHexStrToBin(string num)
         {
-            num = num.Substring(2);
-            builder = new StringBuilder();
-            builder.Append("0b");
+            num = num.Substring(First_BIT_INDEX);
+            mbuilder = new StringBuilder();
+            mbuilder.Append("0b");
             int[] numToIntArr = new int[num.Length];
 
             for (int i = 0; i < num.Length; i++)
@@ -488,14 +489,14 @@ namespace Assignment1
                     numToIntArr[i] = num[i] - 55;
                 }
 
-                builder.Append(IntToBinary(numToIntArr[i]).PadLeft(4, '0'));
+                mbuilder.Append(getBinaryFromIntRecursive(numToIntArr[i]).PadLeft(4, '0'));
             }
 
-            string result = builder.ToString();
+            string result = mbuilder.ToString();
             
             return result;
         }
-        private static string DecimalStrAdder(string numA, string numB)
+        private static string addTwoDecimalStrings(string numA, string numB)
         {
             if (numA.Length > numB.Length)
             {
@@ -548,35 +549,35 @@ namespace Assignment1
 
             return result;
         }
-        private static string BinStrToDecimal(string num)
+        private static string makeBinStrToDec(string num)
         {
             bool bIsNegative = false;
 
-            if (num.Length == 3 && num[2] == '0')
+            if (num.Length == 3 && num[First_BIT_INDEX] == '0')
             {
                 return "0";
             }
-            if (num.Substring(2).All(n => n == '0'))
+            if (num.Substring(First_BIT_INDEX).All(n => n == '0'))
             {
                 return "0";
             } 
 
-            if (num[2] == '0')
+            if (num[First_BIT_INDEX] == '0')
             {
-                num = num.Substring(3);
+                num = num.Substring(First_BIT_INDEX + 1);
             }
             else
             {
                 bIsNegative = true;
                 num = GetTwosComplementOrNull(num);
 
-                if (num[2] == '0')
+                if (num[First_BIT_INDEX] == '0')
                 {
-                    num = num.Substring(3);
+                    num = num.Substring(First_BIT_INDEX + 1);
                 }
                 else
                 {
-                    num = num.Substring(2);
+                    num = num.Substring(First_BIT_INDEX);
                 }
             }
 
@@ -586,7 +587,7 @@ namespace Assignment1
 
             for (int i = 0; i < numToCharArr.Length; i++)
             {
-                string temp = numToCharArr[i] == '0' ? sum : DecimalStrAdder(sum, $"{numToCharArr[i]}");
+                string temp = numToCharArr[i] == '0' ? sum : addTwoDecimalStrings(sum, $"{numToCharArr[i]}");
 
                 if (i == numToCharArr.Length - 1)
                 {
@@ -594,7 +595,7 @@ namespace Assignment1
                     break;
                 }
 
-                sum = DecimalStrAdder(temp, temp);
+                sum = addTwoDecimalStrings(temp, temp);
             }
             if (bIsNegative)
             {
@@ -603,9 +604,9 @@ namespace Assignment1
 
             return sum;
         }
-        private static string BinStrToHex(string num)
+        private static string makeBinStrToHex(string num)
         {
-            num = num.Substring(2);
+            num = num.Substring(First_BIT_INDEX);
 
             int toHexLength = num.Length / 4;
 
@@ -618,7 +619,7 @@ namespace Assignment1
 
             for (int i = 0; i < num.Length; i += 4)
             {
-                int temp = int.Parse(BinToDecWithoutComplement("0b" + num.Substring(i, 4)));
+                int temp = int.Parse(makeBinToDecWithoutComplement("0b" + num.Substring(i, 4)));
 
                 if (temp < 10)
                 {
@@ -635,14 +636,14 @@ namespace Assignment1
             return result;
             
         }
-        private static string BinToDecWithoutComplement(string num)
+        private static string makeBinToDecWithoutComplement(string num)
         {
-            if (num.Length == 3 && num[2] == 0 || num == "0b0000")
+            if (num.Length == 3 && num[First_BIT_INDEX] == 0 || num == "0b0000")
             {
                 return "0";
             }
 
-            num = num.Substring(2);
+            num = num.Substring(First_BIT_INDEX);
 
             char[] numToCharArr = num.ToCharArray();
 
@@ -650,7 +651,7 @@ namespace Assignment1
 
             for (int i = 0; i < numToCharArr.Length; i++)
             {
-                string temp = numToCharArr[i] == '0' ? sum : DecimalStrAdder(sum, $"{numToCharArr[i]}");
+                string temp = numToCharArr[i] == '0' ? sum : addTwoDecimalStrings(sum, $"{numToCharArr[i]}");
 
                 if (i == numToCharArr.Length - 1)
                 {
@@ -658,7 +659,7 @@ namespace Assignment1
                     break;
                 }
 
-                sum = DecimalStrAdder(temp, temp);
+                sum = addTwoDecimalStrings(temp, temp);
             }
 
             return sum;

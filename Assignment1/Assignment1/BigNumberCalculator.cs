@@ -294,7 +294,7 @@ namespace Assignment1
 
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    string temp = chars[i] == '0' ? sum : addTwoDecimalStrings(sum, $"{chars[i]}");
+                    string temp = chars[i] == '0' ? sum : addTwoDecStrings(sum, $"{chars[i]}");
 
                     if (i == chars.Length - 1)
                     {
@@ -302,7 +302,7 @@ namespace Assignment1
                         break;
                     }
 
-                    sum = addTwoDecimalStrings(temp, temp);
+                    sum = addTwoDecStrings(temp, temp);
                 }
 
                 if (bMinus)
@@ -543,7 +543,7 @@ namespace Assignment1
             return result;
         }
 
-        private static string addTwoDecimalStrings(string A, string B)
+        private static string addTwoDecStrings(string A, string B)
         {
             bool bCarriedOver = false;
 

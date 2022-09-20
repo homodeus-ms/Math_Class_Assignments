@@ -294,7 +294,7 @@ namespace Assignment1
 
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    string temp = chars[i] == '0' ? sum : addDecimals(sum, $"{chars[i]}");
+                    string temp = chars[i] == '0' ? sum : addTwoPositiveDecimals(sum, $"{chars[i]}");
 
                     if (i == chars.Length - 1)
                     {
@@ -302,7 +302,7 @@ namespace Assignment1
                         break;
                     }
 
-                    sum = addDecimals(temp, temp);
+                    sum = addTwoPositiveDecimals(temp, temp);
                 }
 
                 if (bMinus)
@@ -543,24 +543,24 @@ namespace Assignment1
             return result;
         }
 
-        private static string addDecimals(string A, string B)
+        private static string addTwoPositiveDecimals(string numA, string numB)
         {
             bool bCarriedOver = false;
 
-            if (A.Length > B.Length)
+            if (numA.Length > numB.Length)
             {
-                B = B.PadLeft(A.Length, '0');
+                numB = numB.PadLeft(numA.Length, '0');
             }
             else
             {
-                A = A.PadLeft(B.Length, '0');
+                numA = numA.PadLeft(numB.Length, '0');
             }
 
-            char[] sums = new char[A.Length];
+            char[] sums = new char[numA.Length];
 
-            for (int i = A.Length - 1; i >= 0; i--)
+            for (int i = numA.Length - 1; i >= 0; i--)
             {
-                char temp = (char)(A[i] + B[i] - '0');
+                char temp = (char)(numA[i] + numB[i] - '0');
 
                 if (bCarriedOver)
                 {

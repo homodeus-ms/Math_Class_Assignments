@@ -20,6 +20,11 @@ namespace Assignment1
 
         public static string GetOnesComplementOrNull(string num)
         {
+            if (num.Length < BIN_HEX_MIN_LENGTH)
+            {
+                return null;
+            }
+
             if (!isValidFormat(num) || isValidFormat(num) && num[1] != 'b')
             {
                 return null;
@@ -40,6 +45,11 @@ namespace Assignment1
 
         public static string GetTwosComplementOrNull(string num)
         {
+            if (num.Length < BIN_HEX_MIN_LENGTH)
+            {
+                return null;
+            }
+
             if (!isValidFormat(num) || isValidFormat(num) && num[1] != 'b')
             {
                 return null;
@@ -223,8 +233,6 @@ namespace Assignment1
             string result = "0x" + new string(chars);
 
             return result;
-
-            return null;
         }
 
         public static string ToDecimalOrNull(string num)
@@ -286,7 +294,7 @@ namespace Assignment1
 
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    string temp = chars[i] == '0' ? sum : addTwoPositiveDecStrings(sum, $"{chars[i]}");
+                    string temp = chars[i] == '0' ? sum : addPositiveDecimalStrings(sum, $"{chars[i]}");
 
                     if (i == chars.Length - 1)
                     {
@@ -294,7 +302,7 @@ namespace Assignment1
                         break;
                     }
 
-                    sum = addTwoPositiveDecStrings(temp, temp);
+                    sum = addPositiveDecimalStrings(temp, temp);
                 }
 
                 if (bMinus)
@@ -535,7 +543,7 @@ namespace Assignment1
             return result;
         }
 
-        private static string addTwoPositiveDecStrings(string A, string B)
+        private static string addPositiveDecimalStrings(string A, string B)
         {
             bool bCarriedOver = false;
 

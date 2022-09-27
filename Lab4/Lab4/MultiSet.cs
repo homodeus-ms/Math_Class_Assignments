@@ -38,6 +38,11 @@ namespace Lab4
 
         public List<string> ToList()
         {
+            if (Set.Count == 0 || Set == null)
+            {
+                return null;
+            }
+            
             sortSetRecursive(0, Set.Count - 1);
             
             return Set;
@@ -45,6 +50,11 @@ namespace Lab4
 
         public MultiSet Union(MultiSet other)
         {
+            if (Set.Count == 0 && other.Set.Count == 0)
+            {
+                return null;
+            }
+
             MultiSet result = new MultiSet();
 
             result.Set.AddRange(Set);
@@ -66,6 +76,11 @@ namespace Lab4
 
         public MultiSet Intersect(MultiSet other)
         {
+            if (Set.Count == 0 && other.Set.Count == 0)
+            {
+                return null;
+            }
+
             MultiSet result = new MultiSet();
 
             for (int i = 0; i < Set.Count; i++)
@@ -95,6 +110,11 @@ namespace Lab4
 
         public MultiSet Subtract(MultiSet other)
         {
+            if (Set.Count == 0 && other.Set.Count == 0)
+            {
+                return null;
+            }
+
             MultiSet result = new MultiSet();
 
             result.Set.AddRange(Set);
@@ -153,6 +173,11 @@ namespace Lab4
 
         public bool IsSubsetOf(MultiSet other)
         {
+            if (Set.Count == 0)
+            {
+                return true;
+            }
+            
             MultiSet intersect = new MultiSet();
             intersect.Set.AddRange(Set);
             intersect = intersect.Intersect(other);
@@ -167,6 +192,11 @@ namespace Lab4
 
         public bool IsSupersetOf(MultiSet other)
         {
+            if (other.Set.Count == 0)
+            {
+                return true;
+            }
+
             MultiSet intersect = new MultiSet();
             intersect.Set.AddRange(Set);
             intersect = intersect.Intersect(other);
@@ -277,6 +307,11 @@ namespace Lab4
         }
         private bool isSameMultiSet(MultiSet set1, MultiSet set2)
         {
+            if (set1.Set == null && set2.Set == null)
+            {
+                return true;
+            }
+
             if (set1.Set.Count != set2.Set.Count)
             {
                 return false;

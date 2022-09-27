@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System;
+using System.Net;
 
 namespace Lab4
 {
@@ -11,25 +12,32 @@ namespace Lab4
             MultiSet set1 = new MultiSet();
             MultiSet set2 = new MultiSet();
 
-            set1.ToList();
-            var result = set1.Union(set2);
-            Console.WriteLine(string.Join(", ", result));
-            Console.WriteLine("--------------------------------------");
-            result = set1.Intersect(set2);
-            Console.WriteLine(string.Join(", ", result));
+            List<string> set1List = new List<string> { "b", "c", "a", "ZZ" };
+            List<string> set2List = new List<string> { "z", "c", "e", "a", "ZZ" };
 
-            Console.WriteLine("--------------------------------------");
-            result = set1.Subtract(set2);
-            Console.WriteLine(string.Join(", ", result));
+            
 
 
+            for (int i = 0; i < set1List.Count; i++)
+            {
+                set1.Add(set1List[i]);
+            }
+            for (int i = 0; i < set2List.Count; i++)
+            {
+                set2.Add(set2List[i]);
+            }
 
-            //set2.Add("");
+            Console.WriteLine($"set1 : {string.Join(", ", set1.Set)}");
+            Console.WriteLine($"set2 : {string.Join(", ", set2.Set)}");
 
-            Console.WriteLine(set1.IsSubsetOf(set2));
-            Console.WriteLine(set2.IsSubsetOf(set1));
-            Console.WriteLine(set1.IsSupersetOf(set2));
-            Console.WriteLine(set2.IsSupersetOf(set1));
+            Console.WriteLine("---------------------------------------------");
+
+            var result = set2.Subtract(set1);
+
+            Console.WriteLine($"Subtract : {string.Join(", ", result.Set)}");
+            Console.WriteLine($"set1 : {string.Join(", ", set1.Set)}");
+            Console.WriteLine($"set2 : {string.Join(", ", set2.Set)}");
+
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Lab4
         {
             if (Set.Count == 0 || Set == null)
             {
-                return null;
+                return new List<string>();
             }
             
             sortSetRecursive(0, Set.Count - 1);
@@ -70,7 +70,11 @@ namespace Lab4
                     result.Set.Add(other.Set[i]);
                 }
             }
-            
+
+            this.ToList();
+            other.ToList();
+            result.ToList();
+
             return result;
         }
 
@@ -105,6 +109,10 @@ namespace Lab4
                 }
             }
 
+            this.ToList();
+            other.ToList();
+            result.ToList();
+
             return result;
         }
 
@@ -130,7 +138,11 @@ namespace Lab4
                     }
                 }
             }
-            
+
+            this.ToList();
+            other.ToList();
+            result.ToList();
+
             return result;
         }
 
@@ -237,9 +249,9 @@ namespace Lab4
             {
                 for (int k = 0; k < pivot.Length; k++)
                 {
-                    setLetterValue = Set[j][k] >= 97 && Set[j][k] <= 122 ? Set[j][k] - 32.5f : Set[j][k];
+                    setLetterValue = Set[j][k] >= 97 && Set[j][k] <= 122 ? Set[j][k] - 31.5f : Set[j][k];
 
-                    pivotLetterValue = pivot[k] >= 97 && pivot[k] <= 122 ? pivot[k] - 32.5f : pivot[k];
+                    pivotLetterValue = pivot[k] >= 97 && pivot[k] <= 122 ? pivot[k] - 31.5f : pivot[k];
 
                     if (setLetterValue < pivotLetterValue)
                     {

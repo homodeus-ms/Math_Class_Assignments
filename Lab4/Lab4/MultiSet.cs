@@ -200,17 +200,24 @@ namespace Lab4
             string pivot = Set[right];
             int i = left - 1;
 
+            float setLetterValue;
+            float pivotLetterValue;
+
             for (int j = left; j < right; j++)
             {
                 for (int k = 0; k < pivot.Length; k++)
                 {
-                    if (Set[j][k] < pivot[k])
+                    setLetterValue = Set[j][k] >= 97 && Set[j][k] <= 122 ? Set[j][k] - 32.5f : Set[j][k];
+
+                    pivotLetterValue = pivot[k] >= 97 && pivot[k] <= 122 ? pivot[k] - 32.5f : pivot[k];
+
+                    if (setLetterValue < pivotLetterValue)
                     {
                         i++;
                         swapSetContents(i, j);
                         break;
                     }
-                    else if (Set[j][k] == pivot[k])
+                    else if (setLetterValue == pivotLetterValue)
                     {
                         if (k == Set[j].Length - 1 && Set[j].Length < pivot.Length)
                         {

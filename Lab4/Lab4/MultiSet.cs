@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -246,15 +245,13 @@ namespace Lab4
 
             for (int i = left; i < right; ++i)
             {
-                /*
+                
                 if (Set[i].Length == 0)
                 {
                     swapSetContents(i, left);
                     left++;
                     continue;
                 }
-                */
-                
 
                 byte[] bytesLeft = encoding.GetBytes(Set[i]);
                 byte[] bytesRight = encoding.GetBytes(pivot);

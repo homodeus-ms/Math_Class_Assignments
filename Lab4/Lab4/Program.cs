@@ -28,7 +28,10 @@ namespace Lab4
             var result = set.ToList();
 
             Console.WriteLine(string.Join(", ", result));
-            
+
+            set.Add("가나다라");
+
+            Console.WriteLine(string.Join(", ", result));
 
         }
         public static void EqualList(List<string> expectedList, List<string> list)

@@ -45,8 +45,15 @@ namespace Lab4
             }
             
             sortSetRecursive(0, Set.Count - 1);
-            
-            return Set;
+
+            List<string> result = new List<string>();
+
+            for (int i = 0; i < Set.Count; i++)
+            {
+                result.Add(Set[i]);
+            }
+
+            return result;
         }
 
         public MultiSet Union(MultiSet other)

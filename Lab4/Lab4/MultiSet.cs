@@ -245,6 +245,13 @@ namespace Lab4
 
             for (int i = left; i < right; ++i)
             {
+                if (Set[i].Length == 0)
+                {
+                    swapSetContents(i, left);
+                    left++;
+                    continue;
+                }
+                
                 byte[] bytesLeft = Encoding.UTF8.GetBytes(Set[i]);
                 byte[] bytesRight = Encoding.UTF8.GetBytes(pivot);
                 int shortLength = bytesLeft.Length < bytesRight.Length ? bytesLeft.Length : bytesRight.Length;

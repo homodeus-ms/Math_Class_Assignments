@@ -8,6 +8,7 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
+            
             MultiSet set = new MultiSet();
 
             set.Add(" ");
@@ -27,7 +28,7 @@ namespace Lab4
             var result = set.ToList();
 
             Console.WriteLine(string.Join(", ", result));
-
+            
 
         }
         public static void EqualList(List<string> expectedList, List<string> list)

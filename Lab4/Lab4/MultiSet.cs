@@ -242,22 +242,29 @@ namespace Lab4
         private int getPivotPos(int left, int right)
         {
             string pivot = Set[right];
+            Encoding encoding = new UTF32Encoding(true, true);
 
             for (int i = left; i < right; ++i)
             {
+                /*
                 if (Set[i].Length == 0)
                 {
                     swapSetContents(i, left);
                     left++;
                     continue;
                 }
+                */
                 
-                byte[] bytesLeft = Encoding.UTF8.GetBytes(Set[i]);
-                byte[] bytesRight = Encoding.UTF8.GetBytes(pivot);
+
+                byte[] bytesLeft = encoding.GetBytes(Set[i]);
+                byte[] bytesRight = encoding.GetBytes(pivot);
+                
                 int shortLength = bytesLeft.Length < bytesRight.Length ? bytesLeft.Length : bytesRight.Length;
 
                 for (int j = 0; j < shortLength; ++j)
                 {
+                    
+                    /*
                     bool bLeftLowerCase = false;
                     bool bRightLowerCase = false;
 
@@ -271,6 +278,7 @@ namespace Lab4
                         bytesRight[j] -= 33;
                         bRightLowerCase = true;
                     }
+                    */
 
                     if (bytesLeft[j] < bytesRight[j])
                     {
@@ -281,6 +289,7 @@ namespace Lab4
 
                     else if (bytesLeft[j] == bytesRight[j])
                     {
+                        /*
                         if (bLeftLowerCase && !bRightLowerCase)
                         {
                             break;
@@ -291,6 +300,7 @@ namespace Lab4
                             left++;
                             break;
                         }
+                        */
                         
                         if (j == shortLength - 1 && bytesLeft.Length < bytesRight.Length)
                         {

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Lab4
 {
@@ -204,7 +206,7 @@ namespace Lab4
 
         public bool IsSupersetOf(MultiSet other)
         {
-            if (other.Set.Count == 0)
+            if (other.Set.Count == 0 || other == null)
             {
                 return true;
             }
@@ -240,47 +242,44 @@ namespace Lab4
         private int getPivotPos(int left, int right)
         {
             string pivot = Set[right];
-            int i = left - 1;
 
-            float setLetterValue;
-            float pivotLetterValue;
-
-            for (int j = left; j < right; j++)
+            for (int i = left; i < right; ++i)
             {
-                for (int k = 0; k < pivot.Length; k++)
+                byte[] bytesLeft = Encoding.UTF8.GetBytes(Set[i]);
+                byte[] bytesRight = Encoding.UTF8.GetBytes(pivot);
+                int shortLength = bytesLeft.Length < bytesRight.Length ? bytesLeft.Length : bytesRight.Length;
+
+                for (int j = 0; j < shortLength; ++j)
                 {
-                    setLetterValue = Set[j][k] >= 97 && Set[j][k] <= 122 ? Set[j][k] - 31.5f : Set[j][k];
-
-                    pivotLetterValue = pivot[k] >= 97 && pivot[k] <= 122 ? pivot[k] - 31.5f : pivot[k];
-
-                    if (setLetterValue < pivotLetterValue)
+                    if (bytesLeft[j] < bytesRight[j])
                     {
-                        i++;
-                        swapSetContents(i, j);
+                        swapSetContents(i, left);
+                        left++;
                         break;
                     }
-                    else if (setLetterValue == pivotLetterValue)
+
+                    else if (bytesLeft[j] == bytesRight[j])
                     {
-                        if (k == Set[j].Length - 1 && Set[j].Length < pivot.Length)
+                        if (j == shortLength - 1 && bytesLeft.Length < bytesRight.Length)
                         {
-                            i++;
-                            swapSetContents(i, j);
+                            swapSetContents(i, left);
+                            left++;
                             break;
                         }
-                        else
-                        {
-                            continue;
-                        }    
+
+                        continue;
                     }
 
-                    break;
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
-            int pivotPos = i + 1;
-            swapSetContents(pivotPos, right);
+            swapSetContents(left, right);
 
-            return pivotPos;
+            return left;
 
         }
         private void swapSetContents(int i, int j)

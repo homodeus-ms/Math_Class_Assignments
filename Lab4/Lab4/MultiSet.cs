@@ -258,6 +258,20 @@ namespace Lab4
 
                 for (int j = 0; j < shortLength; ++j)
                 {
+                    bool bLeftLowerCase = false;
+                    bool bRightLowerCase = false;
+
+                    if (bytesLeft[j] >= 97 && bytesLeft[j] <= 122)
+                    {
+                        bytesLeft[j] -= 33;
+                        bLeftLowerCase = true;
+                    }
+                    if (bytesRight[j] >= 97 && bytesRight[j] <= 122)
+                    {
+                        bytesRight[j] -= 33;
+                        bRightLowerCase = true;
+                    }
+
                     if (bytesLeft[j] < bytesRight[j])
                     {
                         swapSetContents(i, left);
@@ -267,6 +281,17 @@ namespace Lab4
 
                     else if (bytesLeft[j] == bytesRight[j])
                     {
+                        if (bLeftLowerCase && !bRightLowerCase)
+                        {
+                            break;
+                        }
+                        if (!bLeftLowerCase && bRightLowerCase)
+                        {
+                            swapSetContents(i, left);
+                            left++;
+                            break;
+                        }
+                        
                         if (j == shortLength - 1 && bytesLeft.Length < bytesRight.Length)
                         {
                             swapSetContents(i, left);
@@ -276,11 +301,8 @@ namespace Lab4
 
                         continue;
                     }
-
-                    else
-                    {
-                        break;
-                    }
+                        
+                    break;
                 }
             }
 

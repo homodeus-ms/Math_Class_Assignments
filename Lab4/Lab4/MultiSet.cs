@@ -7,28 +7,28 @@ namespace Lab4
 {
     public sealed class MultiSet
     {
-        public List<string> Set { get; private set; } = new List<string>();
+        public List<string> StrList { get; private set; } = new List<string>();
         public string ConcatString { get; private set; }
 
         private uint mCount;
 
         public void Add(string element)
         {
-            Set.Add(element);
+            StrList.Add(element);
         }
 
         public bool Remove(string element)
         {
-            return Set.Remove(element);
+            return StrList.Remove(element);
         }
 
         public uint GetMultiplicity(string element)
         {
             mCount = 0;
 
-            for (int i = 0; i < Set.Count; ++i)
+            for (int i = 0; i < StrList.Count; ++i)
             {
-                if (Set[i] == element)
+                if (StrList[i] == element)
                 {
                     mCount++;
                 }
@@ -39,18 +39,18 @@ namespace Lab4
 
         public List<string> ToList()
         {
-            if (Set.Count == 0 || Set == null)
+            if (StrList.Count == 0 || StrList == null)
             {
                 return new List<string>();
             }
             
-            sortSetRecursive(0, Set.Count - 1);
+            sortSetRecursive(0, StrList.Count - 1);
 
             List<string> result = new List<string>();
 
-            for (int i = 0; i < Set.Count; i++)
+            for (int i = 0; i < StrList.Count; i++)
             {
-                result.Add(Set[i]);
+                result.Add(StrList[i]);
             }
 
             return result;
@@ -58,24 +58,24 @@ namespace Lab4
 
         public MultiSet Union(MultiSet other)
         {
-            if (Set.Count == 0 && other.Set.Count == 0)
+            if (StrList.Count == 0 && other.StrList.Count == 0)
             {
-                return null;
+                return new MultiSet();
             }
 
             MultiSet result = new MultiSet();
 
-            result.Set.AddRange(Set);
+            result.StrList.AddRange(StrList);
 
-            for (int i = 0; i < other.Set.Count; i++)
+            for (int i = 0; i < other.StrList.Count; i++)
             {
-                if (result.Set.Contains(other.Set[i]) && result.GetMultiplicity(other.Set[i]) >= other.GetMultiplicity(other.Set[i]))
+                if (result.StrList.Contains(other.StrList[i]) && result.GetMultiplicity(other.StrList[i]) >= other.GetMultiplicity(other.StrList[i]))
                 {
                     continue;
                 }
                 else
                 {
-                    result.Set.Add(other.Set[i]);
+                    result.StrList.Add(other.StrList[i]);
                 }
             }
 
@@ -88,31 +88,31 @@ namespace Lab4
 
         public MultiSet Intersect(MultiSet other)
         {
-            if (Set.Count == 0 && other.Set.Count == 0)
+            if (StrList.Count == 0 && other.StrList.Count == 0)
             {
-                return null;
+                return new MultiSet();
             }
 
             MultiSet result = new MultiSet();
 
-            for (int i = 0; i < Set.Count; i++)
+            for (int i = 0; i < StrList.Count; i++)
             {
-                if (other.Set.Contains(Set[i]))
+                if (other.StrList.Contains(StrList[i]))
                 {
-                    if (!result.Set.Contains(Set[i]))
+                    if (!result.StrList.Contains(StrList[i]))
                     {
-                        result.Set.Add(Set[i]);
+                        result.StrList.Add(StrList[i]);
                         continue;
                     }
 
-                    uint thisMultiplicitCount = GetMultiplicity(Set[i]);
-                    uint otherMultiplicitiCount = other.GetMultiplicity(Set[i]);
+                    uint thisMultiplCount = GetMultiplicity(StrList[i]);
+                    uint otherMultiplCount = other.GetMultiplicity(StrList[i]);
 
-                    uint lessMultiplicity = thisMultiplicitCount < otherMultiplicitiCount ? thisMultiplicitCount : otherMultiplicitiCount;
+                    uint lessMultiplCount = thisMultiplCount < otherMultiplCount ? thisMultiplCount : otherMultiplCount;
 
-                    if (lessMultiplicity > result.GetMultiplicity(Set[i]))
+                    if (lessMultiplCount > result.GetMultiplicity(StrList[i]))
                     {
-                        result.Set.Add(Set[i]);
+                        result.StrList.Add(StrList[i]);
                     }
                 }
             }
@@ -126,22 +126,22 @@ namespace Lab4
 
         public MultiSet Subtract(MultiSet other)
         {
-            if (Set.Count == 0 && other.Set.Count == 0)
+            if (StrList.Count == 0 && other.StrList.Count == 0)
             {
-                return null;
+                return new MultiSet();
             }
 
             MultiSet result = new MultiSet();
 
-            result.Set.AddRange(Set);
+            result.StrList.AddRange(StrList);
             
-            for (int i = 0; i < other.Set.Count; i++)
+            for (int i = 0; i < other.StrList.Count; i++)
             {
-                for (int j = 0; j < result.Set.Count; j++)
+                for (int j = 0; j < result.StrList.Count; j++)
                 {
-                    if (other.Set[i] == result.Set[j])
+                    if (other.StrList[i] == result.StrList[j])
                     {
-                        result.Set.RemoveAt(j);
+                        result.StrList.RemoveAt(j);
                         break;
                     }
                 }
@@ -162,14 +162,14 @@ namespace Lab4
 
             int count = 1;
 
-            for (int i = 0; i < Set.Count; ++i)
+            for (int i = 0; i < StrList.Count; ++i)
             {
-                string temp = Set[i];
+                string temp = StrList[i];
 
                 for (int j = 0; j < powerSets.Count; ++j)
                 {
                     MultiSet addedSet = new MultiSet();
-                    addedSet.Set.AddRange(powerSets[j].Set);
+                    addedSet.StrList.AddRange(powerSets[j].StrList);
                     addedSet.Add(temp);
                     addedSet.ToList();
 
@@ -193,13 +193,13 @@ namespace Lab4
 
         public bool IsSubsetOf(MultiSet other)
         {
-            if (Set.Count == 0)
+            if (StrList.Count == 0)
             {
                 return true;
             }
             
             MultiSet intersect = new MultiSet();
-            intersect.Set.AddRange(Set);
+            intersect.StrList.AddRange(StrList);
             intersect = intersect.Intersect(other);
 
             if (isSameMultiSet(intersect, this))
@@ -212,13 +212,13 @@ namespace Lab4
 
         public bool IsSupersetOf(MultiSet other)
         {
-            if (other.Set.Count == 0 || other == null)
+            if (other.StrList.Count == 0 || other == null)
             {
                 return true;
             }
 
             MultiSet intersect = new MultiSet();
-            intersect.Set.AddRange(Set);
+            intersect.StrList.AddRange(StrList);
             intersect = intersect.Intersect(other);
 
             if (isSameMultiSet(intersect, other))
@@ -230,7 +230,7 @@ namespace Lab4
         }
         private void getConcatString()
         {
-            ConcatString = string.Join("", Set);
+            ConcatString = string.Join("", StrList);
         }
         private void sortSetRecursive(int left, int right)
         {
@@ -247,43 +247,25 @@ namespace Lab4
         }
         private int getPivotPos(int left, int right)
         {
-            string pivot = Set[right];
-            Encoding encoding = new UTF32Encoding(true, true);
+            string pivot = StrList[right];
+            //Encoding encoding = new UTF32Encoding(true, true);
 
             for (int i = left; i < right; ++i)
             {
-                
-                if (Set[i].Length == 0)
+                if (StrList[i].Length == 0)
                 {
                     swapSetContents(i, left);
                     left++;
                     continue;
                 }
 
-                byte[] bytesLeft = encoding.GetBytes(Set[i]);
-                byte[] bytesRight = encoding.GetBytes(pivot);
+                byte[] bytesLeft = Encoding.UTF8.GetBytes(StrList[i]);
+                byte[] bytesRight = Encoding.UTF8.GetBytes(pivot);
                 
                 int shortLength = bytesLeft.Length < bytesRight.Length ? bytesLeft.Length : bytesRight.Length;
 
                 for (int j = 0; j < shortLength; ++j)
                 {
-                    
-                    /*
-                    bool bLeftLowerCase = false;
-                    bool bRightLowerCase = false;
-
-                    if (bytesLeft[j] >= 97 && bytesLeft[j] <= 122)
-                    {
-                        bytesLeft[j] -= 33;
-                        bLeftLowerCase = true;
-                    }
-                    if (bytesRight[j] >= 97 && bytesRight[j] <= 122)
-                    {
-                        bytesRight[j] -= 33;
-                        bRightLowerCase = true;
-                    }
-                    */
-
                     if (bytesLeft[j] < bytesRight[j])
                     {
                         swapSetContents(i, left);
@@ -293,19 +275,6 @@ namespace Lab4
 
                     else if (bytesLeft[j] == bytesRight[j])
                     {
-                        /*
-                        if (bLeftLowerCase && !bRightLowerCase)
-                        {
-                            break;
-                        }
-                        if (!bLeftLowerCase && bRightLowerCase)
-                        {
-                            swapSetContents(i, left);
-                            left++;
-                            break;
-                        }
-                        */
-                        
                         if (j == shortLength - 1 && bytesLeft.Length < bytesRight.Length)
                         {
                             swapSetContents(i, left);
@@ -327,9 +296,9 @@ namespace Lab4
         }
         private void swapSetContents(int i, int j)
         {
-            string temp = Set[i];
-            Set[i] = Set[j];
-            Set[j] = temp;
+            string temp = StrList[i];
+            StrList[i] = StrList[j];
+            StrList[j] = temp;
         }
         private void deleteDuplicates(List<MultiSet> powerSets)
         {
@@ -361,12 +330,12 @@ namespace Lab4
         }
         private bool isSameMultiSet(MultiSet set1, MultiSet set2)
         {
-            if (set1.Set == null && set2.Set == null)
+            if (set1.StrList == null && set2.StrList == null)
             {
                 return true;
             }
 
-            if (set1.Set.Count != set2.Set.Count)
+            if (set1.StrList.Count != set2.StrList.Count)
             {
                 return false;
             }
@@ -374,9 +343,9 @@ namespace Lab4
             set1.ToList();
             set2.ToList();
             
-            for (int i = 0; i < set1.Set.Count; i++)
+            for (int i = 0; i < set1.StrList.Count; i++)
             {
-                if (set1.Set[i] != set2.Set[i])
+                if (set1.StrList[i] != set2.StrList[i])
                 {
                     return false;
                 }

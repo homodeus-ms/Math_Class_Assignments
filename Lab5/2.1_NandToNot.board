@@ -4,8 +4,8 @@
     "Minor": 0
   },
   "PanCoords": {
-    "X": 0.0,
-    "Y": 0.0
+    "X": 82.399994,
+    "Y": 152.0
   },
   "InputCoords": {
     "X": 90.0,
@@ -25,11 +25,23 @@
   "Outputs": [
     {
       "Order": 0,
-      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502"
+      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502",
+      "InputSource": "780fdfac-5bbb-45f5-be8f-ca44442b83d7"
     }
   ],
-  "Gates": [],
+  "Gates": [
+    {
+      "ID": "780fdfac-5bbb-45f5-be8f-ca44442b83d7",
+      "Inputs": [
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112"
+      ],
+      "X": 410.99997,
+      "Y": 67.2,
+      "Type": "NAND"
+    }
+  ],
   "AllowedGateTypes": [
-      "NAND"
+    "NAND"
   ]
 }

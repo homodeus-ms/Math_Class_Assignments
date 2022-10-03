@@ -16,6 +16,11 @@
       "Order": 0,
       "ID": "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
       "Value": false
+    },
+    {
+      "Order": 1,
+      "ID": "f8f8cae6-9983-4769-ba29-eccfa94174c8",
+      "Value": false
     }
   ],
   "OutputCoords": {
@@ -25,11 +30,43 @@
   "Outputs": [
     {
       "Order": 0,
-      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502"
+      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502",
+      "InputSource": "408eba7f-94e0-493b-93a5-8c1fb8a1ff72"
     }
   ],
-  "Gates": [],
+  "Gates": [
+    {
+      "ID": "8858bd1d-667b-46b3-93a6-4ed465dd6dd3",
+      "Inputs": [
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112"
+      ],
+      "X": 364.6,
+      "Y": 45.599995,
+      "Type": "NOR"
+    },
+    {
+      "ID": "67814555-38df-4ed1-8ee5-343a58821dcd",
+      "Inputs": [
+        "f8f8cae6-9983-4769-ba29-eccfa94174c8",
+        "f8f8cae6-9983-4769-ba29-eccfa94174c8"
+      ],
+      "X": 364.6,
+      "Y": 116.00001,
+      "Type": "NOR"
+    },
+    {
+      "ID": "408eba7f-94e0-493b-93a5-8c1fb8a1ff72",
+      "Inputs": [
+        "8858bd1d-667b-46b3-93a6-4ed465dd6dd3",
+        "67814555-38df-4ed1-8ee5-343a58821dcd"
+      ],
+      "X": 575.0,
+      "Y": 84.8,
+      "Type": "NOR"
+    }
+  ],
   "AllowedGateTypes": [
-      "NOR"
+    "NOR"
   ]
 }

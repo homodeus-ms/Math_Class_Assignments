@@ -4,8 +4,8 @@
     "Minor": 0
   },
   "PanCoords": {
-    "X": 0.0,
-    "Y": 0.0
+    "X": 24.0,
+    "Y": 164.80002
   },
   "InputCoords": {
     "X": 90.0,
@@ -16,6 +16,11 @@
       "Order": 0,
       "ID": "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
       "Value": false
+    },
+    {
+      "Order": 1,
+      "ID": "1b9ac05d-7731-4c23-a6b2-87204edcb878",
+      "Value": false
     }
   ],
   "OutputCoords": {
@@ -25,11 +30,63 @@
   "Outputs": [
     {
       "Order": 0,
-      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502"
+      "ID": "fb700d20-5304-4ec7-85f0-13b0e636e502",
+      "InputSource": "599efce8-0e2c-417e-9317-95036547b2d6"
     }
   ],
-  "Gates": [],
+  "Gates": [
+    {
+      "ID": "e7ee3ca2-37c8-4ac9-b723-421ac645555b",
+      "Inputs": [
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112"
+      ],
+      "X": 325.39996,
+      "Y": 13.600006,
+      "Type": "NAND"
+    },
+    {
+      "ID": "75e4170f-976a-47c8-a471-678b0e034b2c",
+      "Inputs": [
+        "1b9ac05d-7731-4c23-a6b2-87204edcb878",
+        "1b9ac05d-7731-4c23-a6b2-87204edcb878"
+      ],
+      "X": 329.39996,
+      "Y": 135.6,
+      "Type": "NAND"
+    },
+    {
+      "ID": "f4cecd1d-f1d7-4946-8d06-b27f848e57ed",
+      "Inputs": [
+        "e7ee3ca2-37c8-4ac9-b723-421ac645555b",
+        "1b9ac05d-7731-4c23-a6b2-87204edcb878"
+      ],
+      "X": 513.39996,
+      "Y": 37.599976,
+      "Type": "NAND"
+    },
+    {
+      "ID": "0bab9afd-86ee-4a6d-a844-db92c2c9e260",
+      "Inputs": [
+        "79e0ba00-8ac1-4ac1-bd72-ec09e9888112",
+        "75e4170f-976a-47c8-a471-678b0e034b2c"
+      ],
+      "X": 519.0,
+      "Y": 116.39996,
+      "Type": "NAND"
+    },
+    {
+      "ID": "599efce8-0e2c-417e-9317-95036547b2d6",
+      "Inputs": [
+        "f4cecd1d-f1d7-4946-8d06-b27f848e57ed",
+        "0bab9afd-86ee-4a6d-a844-db92c2c9e260"
+      ],
+      "X": 693.39996,
+      "Y": 79.59999,
+      "Type": "NAND"
+    }
+  ],
   "AllowedGateTypes": [
-      "NAND"
+    "NAND"
   ]
 }

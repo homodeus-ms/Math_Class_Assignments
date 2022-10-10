@@ -34,7 +34,7 @@ namespace Lab6
 
             foreach (Item item in NonRecycleItems)
             {
-                if (item.Type == EType.Furniture || item.Type == EType.Electronics)
+                if (item.IsToxicWaste == false || item.Type != EType.Furniture || item.Type != EType.Electronics)
                 {
                     mDumpItems.Add(item);
                 }

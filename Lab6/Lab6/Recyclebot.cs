@@ -38,18 +38,10 @@ namespace Lab6
                 {
                     mDumpItems.Add(item);
                 }
-                else if (item.IsToxicWaste == false && (item.Weight != 10.0 || item.Weight != 11.0 || item.Weight != 15.0))
+                else if (item.IsToxicWaste == false && !(item.Weight == 10.0 || item.Weight == 11.0 || item.Weight == 15.0))
                 {
                     mDumpItems.Add(item);
                 }
-                
-                /*
-                if ((item.IsToxicWaste == false && (item.Weight != 10.0 || item.Weight != 11.0 || item.Weight != 15.0)) || 
-                    item.Type == EType.Furniture || item.Type == EType.Electronics)
-                {
-                    mDumpItems.Add(item);
-                }
-                */
             }
 
             return mDumpItems;

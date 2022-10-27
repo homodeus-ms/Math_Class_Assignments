@@ -54,7 +54,7 @@ namespace Assignment3
             {
                 Debug.Assert(temp[i] == newSteps[i]);
             }
-            
+            /*
             temp = new List<int> { 100, 102, 112, 111, 113, 117, 121, 128, 138, 146, 155, 157, 161, 165, 170, 170 };
             temp1 = new int[] { 100, 102, 112, 170 };
             newSteps = StepMaker.MakeSteps(temp1, new CosineNoise());
@@ -63,7 +63,7 @@ namespace Assignment3
             {
                 Debug.Assert(temp[i] == newSteps[i]);
             }
-
+            */
             
         }
     }

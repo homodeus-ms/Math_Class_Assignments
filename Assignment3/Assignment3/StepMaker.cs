@@ -6,19 +6,19 @@ namespace Assignment3
     public static class StepMaker
     {
         private const float DENOMINATOR = 5.0f;
-        private static List<int> result;
+        private static List<int> mResult;
 
         public static List<int> MakeSteps(int[] steps, INoise noise)
         {
-            result = new List<int>();
+            mResult = new List<int>();
 
-            result.Add(steps[0]);
+            mResult.Add(steps[0]);
 
-            MakeStepsRecursive(steps, noise, 0);
+            makeStepsRecursive(steps, noise, 0);
             
-            return result;
+            return mResult;
         }
-        public static void MakeStepsRecursive(int[] steps, INoise noise, int level)
+        private static void makeStepsRecursive(int[] steps, INoise noise, int level)
         {
             for (int i = 0; i < steps.Length - 1; ++i)
             {
@@ -38,13 +38,13 @@ namespace Assignment3
                         newSteps[j] = newStep;
                     }
 
-                    MakeStepsRecursive(newSteps, noise, ++level);
+                    makeStepsRecursive(newSteps, noise, ++level);
                     level--;
                 }
 
                 else
                 {
-                    result.Add(steps[i + 1]);
+                    mResult.Add(steps[i + 1]);
                 }
             }
         }

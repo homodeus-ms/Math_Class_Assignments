@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Assignment3
 {
-    public static class StepMaker
+    internal class Preserve
     {
         private const float DENOMINATOR = 5.0f;
 
@@ -15,14 +16,12 @@ namespace Assignment3
 
             result.Add(steps[0]);
 
-            makeStepsRecursive(result, steps, noise, -1);
+            makeStepsRecursive(result, steps, noise, 0);
 
             return result;
         }
         private static void makeStepsRecursive(List<int> result, int[] steps, INoise noise, int level)
         {
-            level++;
-            
             for (int i = 0; i < steps.Length - 1; ++i)
             {
                 if (Math.Abs(steps[i + 1] - steps[i]) > 10)
@@ -41,8 +40,8 @@ namespace Assignment3
                         newSteps[j] = newStep;
                     }
 
-                    makeStepsRecursive(result, newSteps, noise, level);
-                    //level--;
+                    makeStepsRecursive(result, newSteps, noise, ++level);
+                    level--;
                 }
 
                 else

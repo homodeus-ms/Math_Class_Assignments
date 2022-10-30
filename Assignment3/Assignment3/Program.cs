@@ -8,15 +8,15 @@ namespace Assignment3
     {
         static void Main(string[] args)
         {
-            
+            /*
             INoise noise = new ZeroNoise();
 
-            int[] steps = new int[2] { 0, 60 };
+            int[] steps = new int[2] { 0, 100 };
 
             List<int> result = StepMaker.MakeSteps(steps, noise);
 
             Console.WriteLine(string.Join(" ", result));
-            
+            */
             
 
 
@@ -60,8 +60,8 @@ namespace Assignment3
             noise = new LevelNoise();
             newSteps = StepMaker.MakeSteps(steps, noise);
 
-            Console.WriteLine(string.Join(" ", expectedValue));
-            Console.WriteLine(string.Join(" ", newSteps));
+            //Console.WriteLine(string.Join(" ", expectedValue));
+            //Console.WriteLine(string.Join(" ", newSteps));
 
             Debug.Assert(expectedValue.Count == newSteps.Count);
             for (int i = 0; i < expectedValue.Count; i++)
@@ -87,8 +87,31 @@ namespace Assignment3
                 Debug.Assert(temp[i] == newSteps[i]);
             }
             */
+
         }
     }
+    /*
+    public sealed class LevelNoise : INoise
+    {
+        public int GetNext(int level)
+        {
+            return level;
+        }
+    }
+
+    public sealed class CosineNoise : INoise
+    {
+        private const double BASE_SAMPLING_WIDTH = Math.PI / 4;
+        private double mX = -BASE_SAMPLING_WIDTH;
+
+        public int GetNext(int level)
+        {
+            mX += BASE_SAMPLING_WIDTH / Math.Pow(2, level);
+            return (int)(5 * Math.Cos(mX));
+        }
+    }
+    */
+
 }
 
 

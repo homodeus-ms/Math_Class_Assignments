@@ -13,8 +13,8 @@ namespace Assignment3
         {
             List<int> result = new List<int>(steps.Length);
 
-            result.Add(steps[0]);
-
+            result = steps.ToList();
+            
             makeStepsRecursive(result, steps, noise, -1);
 
             return result;
@@ -22,34 +22,40 @@ namespace Assignment3
         private static void makeStepsRecursive(List<int> result, int[] steps, INoise noise, int level)
         {
             level++;
-            
-            for (int i = 0; i < steps.Length - 1; ++i)
+            bool bStillHigh = false;
+
+            for(int i = 0; i < result.Count - 1; ++i)
             {
-                if (Math.Abs(steps[i + 1] - steps[i]) > 10)
+                int start = result[i];
+                int end = result[i + 1];
+
+                if (Math.Abs(end - start) <= 10)
                 {
-                    int start = steps[i];
-                    int end = steps[i + 1];
-
-                    int[] newSteps = new int[6];
-
-                    newSteps[0] = start;
-                    newSteps[newSteps.Length - 1] = end;
-
-                    for (int j = 1; j < 5; ++j)
-                    {
-                        int newStep = (int)((end - start) / DENOMINATOR * j + start + noise.GetNext(level));
-                        newSteps[j] = newStep;
-                    }
-
-                    makeStepsRecursive(result, newSteps, noise, level);
-                    //level--;
+                    continue;
                 }
 
                 else
                 {
-                    result.Add(steps[i + 1]);
+                    bStillHigh = true;
+
+                    for (int j = 1; j < 5; ++j)
+                    {
+                        int newStep = (int)((end - start) / 5.0 * j + start);
+                        newStep += noise.GetNext(level);
+
+                        result.Insert(i + j, newStep);
+                    }
+
+                    i += 4;
                 }
             }
+
+            if (!bStillHigh)
+            {
+                return;
+            }
+
+            makeStepsRecursive(result, steps, noise, level);
         }
     }
 }

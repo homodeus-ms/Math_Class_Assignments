@@ -13,49 +13,49 @@ namespace Assignment3
         {
             List<int> result = new List<int>(steps.Length);
 
-            result = steps.ToList();
-            
-            makeStepsRecursive(result, steps, noise, -1);
+            result.Add(steps[0]);
 
-            return result;
+            makeStepsRecursive(result, steps, noise, 0);
+
+            List<int> result2 = new List<int>(result.Count);
+
+            for (int i = 0; i < result.Count; ++i)
+            {
+                result2.Add(result[i]);
+            }
+
+            return result2;
         }
         private static void makeStepsRecursive(List<int> result, int[] steps, INoise noise, int level)
         {
-            level++;
-            bool bStillHigh = false;
-
-            for(int i = 0; i < result.Count - 1; ++i)
+            for (int i = 0; i < steps.Length - 1; ++i)
             {
-                int start = result[i];
-                int end = result[i + 1];
-
-                if (Math.Abs(end - start) <= 10)
+                if (Math.Abs(steps[i + 1] - steps[i]) > 10)
                 {
-                    continue;
+                    int start = steps[i];
+                    int end = steps[i + 1];
+
+                    int[] newSteps = new int[6];
+
+                    newSteps[0] = start;
+                    newSteps[newSteps.Length - 1] = end;
+
+                    for (int j = 1; j < 5; ++j)
+                    {
+                        int newStep = (int)((end - start) / DENOMINATOR * j + start);
+                        newStep += noise.GetNext(level);
+                        newSteps[j] = newStep;
+                    }
+
+                    makeStepsRecursive(result, newSteps, noise, ++level);
+                    level--;
                 }
 
                 else
                 {
-                    bStillHigh = true;
-
-                    for (int j = 1; j < 5; ++j)
-                    {
-                        int newStep = (int)((end - start) / 5.0 * j + start);
-                        newStep += noise.GetNext(level);
-
-                        result.Insert(i + j, newStep);
-                    }
-
-                    i += 4;
+                    result.Add(steps[i + 1]);
                 }
             }
-
-            if (!bStillHigh)
-            {
-                return;
-            }
-
-            makeStepsRecursive(result, steps, noise, level);
         }
     }
 }

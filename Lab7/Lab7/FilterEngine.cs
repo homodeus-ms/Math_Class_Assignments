@@ -77,7 +77,7 @@ namespace Lab7
             return sortKeys;
         }
 
-        private static bool findValueRecursive(List<Frame> frame, uint ID, int start, int end)
+        private static bool findValueRecursive(List<Frame> frame, uint id, int start, int end)
         { 
             int mid = (start + end) / 2;
 
@@ -86,19 +86,19 @@ namespace Lab7
                 return false;
             }
 
-            if (ID == frame[mid].ID)
+            if (id == frame[mid].ID)
             {
                 return true;
             }
 
-            else if (ID < frame[mid].ID)
+            else if (id < frame[mid].ID)
             {
-                return findValueRecursive(frame, ID, start, mid - 1);
+                return findValueRecursive(frame, id, start, mid - 1);
             }
             
             else
             {
-                return findValueRecursive(frame, ID, mid + 1, end);
+                return findValueRecursive(frame, id, mid + 1, end);
             }
         }
     }

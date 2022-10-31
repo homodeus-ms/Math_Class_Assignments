@@ -42,7 +42,7 @@ namespace Lab7
 
             for (int i = 0; i < frame1.Count; ++i)
             {
-                if (FindValueRecursive(frame2, frame1[i].ID, 0, frame2.Count - 1))
+                if (findValueRecursive(frame2, frame1[i].ID, 0, frame2.Count - 1))
                 {
                     interSection.Add(frame1[i]);
                 }
@@ -77,7 +77,7 @@ namespace Lab7
             return sortKeys;
         }
 
-        private static bool FindValueRecursive(List<Frame> frame, uint ID, int start, int end)
+        private static bool findValueRecursive(List<Frame> frame, uint ID, int start, int end)
         { 
             int mid = (start + end) / 2;
 
@@ -93,12 +93,12 @@ namespace Lab7
 
             else if (ID < frame[mid].ID)
             {
-                return FindValueRecursive(frame, ID, start, mid - 1);
+                return findValueRecursive(frame, ID, start, mid - 1);
             }
             
             else
             {
-                return FindValueRecursive(frame, ID, mid + 1, end);
+                return findValueRecursive(frame, ID, mid + 1, end);
             }
         }
     }

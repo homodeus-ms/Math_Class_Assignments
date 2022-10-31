@@ -130,15 +130,5 @@ namespace Lab7
             return tuples.Select(t => t.Item2).ToList();
         }
 
-        private static void printFrameNames(List<Frame> items)
-        {
-            int count = 0;
-            
-            foreach (Frame item in items)
-            {
-                Console.WriteLine($"Frame{count} : {item.Name}");
-                count++;
-            }
-        }
     }
 }

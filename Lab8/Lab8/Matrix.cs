@@ -134,12 +134,12 @@ namespace Lab8
             {
                 return null;
             }
-            
+            /*
             if (multiplierMatrix.GetLength(0) == 1)
             {
                 multiplierMatrix = Transpose(multiplierMatrix);
             }
-
+            */
             if (multiplicandMatrix.GetLength(1) != multiplierMatrix.GetLength(0))
             {
                 return null;

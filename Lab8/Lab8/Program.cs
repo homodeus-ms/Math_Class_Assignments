@@ -7,24 +7,39 @@ namespace Lab8
     {
         static void Main(string[] args)
         {
-            int[,] a = new int[3, 5]
+            int[,] a = new int[1, 3]
             {
-                {1,1,1,1,1 },
-                {1,1,1,1,1 },
-                {1,1,1,1,1 }
+                { 1,2,3},
+            };
+            int[,] b = new int[3, 2]
+            {
+                {1, 1 },
+                {1,1 },
+                {1,1 }
+
             };
 
-            int[,] b = new int[5, 3]
+            int[,] c = new int[3, 1]
             {
-                {1,1,1 },
-                {1,1,1 },
-                {1,1,1 },
-                {1,1,1 },
-                {1,1,1 }
+                {1 },
+                {2 },
+                {3 }
             };
 
-            int[,] result = Matrix.MultiplyOrNull(a, b);
+            int[,] d = new int[1, 2]
+            {
+                {1, 2 }
+            };
 
+            int[,] result = Matrix.MultiplyOrNull(b, a);
+            Debug.Assert(result == null);
+            result = Matrix.MultiplyOrNull(b, d);
+            Debug.Assert(result == null);
+
+            result = Matrix.MultiplyOrNull(a, b);
+            printMatrix(result);
+
+            result = Matrix.MultiplyOrNull(a, c);
             printMatrix(result);
 
         }

@@ -7,6 +7,10 @@ namespace Assignment4
 {
     public sealed class Program
     {
+        const int ONED_SIGNAL_SIZE = 100;
+        const int NOISE_POINTS_COUNT = 50;
+        const string IMAGE_FILE_NAME = "earth.bmp";
+
         public static void Main(string[] args)
         {
             const int ONED_SIGNAL_SIZE = 100;
@@ -115,16 +119,6 @@ namespace Assignment4
                 });
 
             newImage.Save($"{Path.GetFileNameWithoutExtension(IMAGE_FILE_NAME)}_box.bmp");
-
-
-            Console.WriteLine("expected");
-            printBitmap(expected);
-            Console.WriteLine("result");
-            printBitmap(newImage);
-
-
-
-
             assertBitmapEqual(expected, newImage, 1);
 
             filter2D = SignalProcessor.GetGaussianFilter2D(1);
@@ -137,13 +131,14 @@ namespace Assignment4
 
             #endregion
         }
+
         private static void printBitmap(Bitmap bitmap)
         {
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 6; ++i)
             {
-                for (int j = 0; j < 5; ++j)
+                for (int j = 0; j < 6; ++j)
                 {
-                    Color color = bitmap.GetPixel(i, j);
+                    Color color = bitmap.GetPixel(j, i);
                     Console.Write($"{color.R},{color.G},{color.B} / ");
                 }
 

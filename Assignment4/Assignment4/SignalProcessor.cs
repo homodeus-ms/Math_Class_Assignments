@@ -95,11 +95,9 @@ namespace Assignment4
 
             int pivot = (filter.GetLength(1) - 1) / 2;
 
-            double[,] rotatedFilter = getRotated90DegreeFilter(filter);
-
-            for (int i = 0; i < width; ++i)
+            for (int i = 0; i < height; ++i)
             {
-                for (int j = 0; j < height; ++j)
+                for (int j = 0; j < width; ++j)
                 {
                     double r = 0.0;
                     double g = 0.0;
@@ -109,40 +107,25 @@ namespace Assignment4
                     {
                         for (int m = 0; m < filter.GetLength(1); ++m)
                         {
-                            int indexX = i - k + pivot;
-                            int indexY = j - m + pivot;
+                            int indexX = j - m + pivot;
+                            int indexY = i - k + pivot;
 
                             if (indexX >= 0 && indexX < width && indexY >= 0 && indexY < height)
                             {
-                                r += rotatedFilter[k, m] * bitmap.GetPixel(indexX, indexY).R;
-                                g += rotatedFilter[k, m] * bitmap.GetPixel(indexX, indexY).G;
-                                b += rotatedFilter[k, m] * bitmap.GetPixel(indexX, indexY).B;
+                                r += filter[k, m] * bitmap.GetPixel(indexX, indexY).R;
+                                g += filter[k, m] * bitmap.GetPixel(indexX, indexY).G;
+                                b += filter[k, m] * bitmap.GetPixel(indexX, indexY).B;
                             }
                         }
                     }
 
                     Color pixel = new Color((byte)r, (byte)g, (byte)b);
 
-                    result.SetPixel(i, j, pixel);
+                    result.SetPixel(j, i, pixel);
                 }
             }
 
             return result;
-        }
-
-        private static double[,] getRotated90DegreeFilter(double[,] filter)
-        {
-            double[,] rotatedFilter = new double[filter.GetLength(0), filter.GetLength(1)];
-
-            for (int i = 0; i < filter.GetLength(0); ++i)
-            {
-                for(int j = 0; j < filter.GetLength(1); ++j)
-                {
-                    rotatedFilter[j, filter.GetLength(1) - 1 - i] = filter[i, j];
-                }
-            }
-
-            return rotatedFilter;
         }
 
         private static int getArraySize(double sigma)

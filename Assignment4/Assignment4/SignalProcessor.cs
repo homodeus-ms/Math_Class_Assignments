@@ -7,6 +7,9 @@ namespace Assignment4
 {
     public static class SignalProcessor
     {
+        const byte RGB_MAX_VALUE = 255;
+        const byte RGB_MIN_VALUE = 0;
+        
         public static double[] GetGaussianFilter1D(double sigma)
         {
             int length = getArraySize(sigma);
@@ -93,7 +96,7 @@ namespace Assignment4
 
             Bitmap result = new Bitmap(width, height);
 
-            int pivot = (filter.GetLength(1) - 1) / 2;
+            int offset = (filter.GetLength(1) - 1) / 2;
 
             for (int i = 0; i < height; ++i)
             {
@@ -107,17 +110,27 @@ namespace Assignment4
                     {
                         for (int m = 0; m < filter.GetLength(1); ++m)
                         {
-                            int indexX = j - m + pivot;
-                            int indexY = i - k + pivot;
+                            int indexX = j - m + offset;
+                            int indexY = i - k + offset;
 
                             if (indexX >= 0 && indexX < width && indexY >= 0 && indexY < height)
                             {
                                 r += filter[k, m] * bitmap.GetPixel(indexX, indexY).R;
                                 g += filter[k, m] * bitmap.GetPixel(indexX, indexY).G;
                                 b += filter[k, m] * bitmap.GetPixel(indexX, indexY).B;
+
+                                r = r > 255 ? 255 : r;
+                                r = r < 0 ? 0 : r;
+                                g = g > 255 ? 255 : g;
+                                g = g < 0 ? 0 : g;
+                                b = b > 255 ? 255 : b;
+                                b = b < 0 ? 0 : b;
+
                             }
                         }
                     }
+
+                     
 
                     Color pixel = new Color((byte)r, (byte)g, (byte)b);
 

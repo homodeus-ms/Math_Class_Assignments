@@ -13,6 +13,41 @@ namespace Assignment4
 
         public static void Main(string[] args)
         {
+            
+            Bitmap image = new Bitmap(3, 3);
+
+            for (int i = 0; i < image.Height; ++i)
+            {
+                for (int j = 0; j < image.Width; ++j)
+                {
+                    Color pixel = new Color((byte)250, 250, 250);
+
+                    image.SetPixel(j, i, pixel);
+                }
+            }
+
+            double[,] filter = new double[,]
+            {
+                {5, 5, 5 },{0,0,0},{0,0,0}
+            };
+
+            Bitmap newImage = SignalProcessor.ConvolveImage(image, filter);
+
+            Console.WriteLine($"image size = {image.Width},{image.Height}");
+
+            printBitmap(image);
+
+            Console.WriteLine();
+
+            Console.WriteLine($"image size = {newImage.Width},{newImage.Height}");
+
+            printBitmap(newImage);
+            
+            
+
+
+
+            /*
             const int ONED_SIGNAL_SIZE = 100;
             const int NOISE_POINTS_COUNT = 50;
             const string IMAGE_FILE_NAME = "earth.bmp";
@@ -130,13 +165,18 @@ namespace Assignment4
             assertBitmapEqual(expected, newImage, 1);
 
             #endregion
+
+
+
+
+            */
         }
 
         private static void printBitmap(Bitmap bitmap)
         {
-            for (int i = 0; i < 6; ++i)
+            for (int i = 0; i < bitmap.Height; ++i)
             {
-                for (int j = 0; j < 6; ++j)
+                for (int j = 0; j < bitmap.Width; ++j)
                 {
                     Color color = bitmap.GetPixel(j, i);
                     Console.Write($"{color.R},{color.G},{color.B} / ");
